@@ -1,6 +1,7 @@
 package com.property.feedback.repository.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "properties")
-public class Property {
+public class Property extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +23,17 @@ public class Property {
 
     private Double distance;
 
-    @OneToMany(mappedBy = "properties", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Review> review;
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Review> review = new ArrayList<>();
+
+    public Property() {
+    }
+
+    public Property(String address, double latitude, double longitude) {
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 
     public Integer getPropertyId() {
         return propertyId;
@@ -65,6 +75,38 @@ public class Property {
         this.distance = distance;
     }
 
+    public List<Review> getReview() {
+        return review;
+    }
+
+    public void setReview(List<Review> review) {
+        this.review = review;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Property property = (Property) o;
+
+        if (Double.compare(property.latitude, latitude) != 0) return false;
+        if (Double.compare(property.longitude, longitude) != 0) return false;
+        return address != null ? address.equals(property.address) : property.address == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(latitude);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(longitude);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
+
     @Override
     public String toString() {
         return "Property{" +
@@ -73,6 +115,7 @@ public class Property {
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", distance=" + distance +
+                ", review=" + review +
                 '}';
     }
 }

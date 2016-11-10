@@ -10,8 +10,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by nehaojha on 08/11/16.
  */
@@ -27,16 +25,37 @@ public class PropertyRepoTest {
 
     @Test
     public void findNearByProperties() throws Exception {
-        Property property = new Property();
-        property.setAddress("colambia asia palam vihar gurgaon");
-        property.setLatitude(28.512783);
-        property.setLongitude(77.036893);
-        List<Property> nearByProperties = propertyRepo.findNearByProperties(28.512783, 77.036893);
+        setUpDB();
+        List<Property> nearByProperties = propertyRepo.findNearByProperties(28.512783, 77.036893);//columbia asia palam vihar gurgaon
+        List<Property> expectedProperties = getExpectedList();
         Assert.assertNotNull(nearByProperties);
         Assert.assertTrue(!nearByProperties.isEmpty());
-        for (Property properties : nearByProperties) {
-            System.out.println(properties);
-        }
+        Assert.assertTrue(expectedProperties.equals(nearByProperties));
+        nearByProperties.stream().forEachOrdered(System.out::println);
+        expectedProperties.stream().forEachOrdered(System.out::println);
+
+        cleanDB();
     }
 
+    private void setUpDB() {
+        propertyRepo.save(new Property("jmd megapolis sector 48 grugaon", 28.419657, 77.038186));
+        propertyRepo.save(new Property("Ambience mall gurgaon", 28.504865, 77.094588));
+        propertyRepo.save(new Property("445, sector 22 B gurgaon", 28.510708, 77.066766));
+        propertyRepo.save(new Property("626, sector 21 pocket e gurgaon", 28.513393, 77.072276));
+        propertyRepo.save(new Property("hewo 2 apartment, jalwayu towers road, sector 56 gurgaon", 28.430068, 77.098305));
+    }
+
+    private void cleanDB() {
+        propertyRepo.deleteAll();
+    }
+
+    public List<Property> getExpectedList() {
+        List<Property> properties = new ArrayList<>();
+        properties.add(new Property("445, sector 22 B gurgaon", 28.510708, 77.066766));
+        properties.add(new Property("626, sector 21 pocket e gurgaon", 28.513393, 77.072276));
+        properties.add(new Property("Ambience mall gurgaon", 28.504865, 77.094588));
+        properties.add(new Property("jmd megapolis sector 48 grugaon", 28.419657, 77.038186));
+        properties.add(new Property("hewo 2 apartment, jalwayu towers road, sector 56 gurgaon", 28.430068, 77.098305));
+        return properties;
+    }
 }

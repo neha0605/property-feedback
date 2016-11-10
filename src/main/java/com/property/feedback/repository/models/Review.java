@@ -19,7 +19,7 @@ public class Review extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "propertyId")
-    private Property properties;
+    private Property property;
 
     private int rating;
 
@@ -63,5 +63,13 @@ public class Review extends BaseEntity {
 
     public void setPublished(boolean published) {
         this.published = published;
+    }
+
+    public Property getProperty() {
+        return property;
+    }
+
+    public void setProperty(Property property) {
+        this.property = property;
     }
 }
