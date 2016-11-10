@@ -30,7 +30,6 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="property-review" value="datasource" />
-          <factory-entry name="spring-examples" value="datasource" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/application-context.xml" />
       </configuration>

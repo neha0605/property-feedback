@@ -1,6 +1,7 @@
 package com.property.feedback.repository.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by nehaojha on 07/11/16.
@@ -20,6 +21,9 @@ public class Property {
     private double longitude;
 
     private Double distance;
+
+    @OneToMany(mappedBy = "properties", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Review> review;
 
     public Integer getPropertyId() {
         return propertyId;

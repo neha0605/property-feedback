@@ -17,6 +17,10 @@ public class Review extends BaseEntity {
 
     private String phoneNumber;
 
+    @ManyToOne
+    @JoinColumn(name = "propertyId")
+    private Property properties;
+
     private int rating;
 
     private boolean published;
