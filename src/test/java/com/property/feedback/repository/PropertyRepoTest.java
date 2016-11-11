@@ -19,7 +19,7 @@ public class PropertyRepoTest {
 
     @Before
     public void setUp() throws Exception {
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("application-context-test.xml");
         propertyRepo = context.getBean(PropertyRepo.class);
     }
 

@@ -15,7 +15,7 @@
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="datasource"/>
         <property name="persistenceUnitName" value="spring-examples"/>
-        <property name="packagesToScan" value="com.library.repository.models"/>
+        <property name="packagesToScan" value="com.property.feedback.repository.models"/>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                 <property name="showSql" value="true"/>
@@ -35,7 +35,7 @@
 
     <tx:annotation-driven/>
 
-    <jpa:repositories base-package="com.library.repository"/>
+    <jpa:repositories base-package="com.property.feedback.repository"/>
 
     <bean id="datasource" class="org.apache.commons.dbcp2.BasicDataSource">
         <property name="url" value="jdbc:mysql://localhost:3306/practice_test"/>
@@ -44,5 +44,5 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
     </bean>
 
-    <context:component-scan base-package="com.library"/>
+    <context:component-scan base-package="com.property.feedback"/>
 </beans>

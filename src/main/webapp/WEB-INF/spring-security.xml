@@ -18,10 +18,6 @@
         </constructor-arg>
     </bean>
 
-    <bean id="userAuthenticationManager"
-          class="com.property.feedback.auth.UserNamePasswordAuthenticationManager">
-    </bean>
-
     <bean id="clientBasicAuthManager"
           class="com.property.feedback.auth.ClientBasicAuthManager">
         <constructor-arg index="0">
@@ -59,19 +55,16 @@
         <oauth:implicit />
         <oauth:refresh-token />
         <oauth:client-credentials />
-        <oauth:password authentication-manager-ref="userAuthenticationManager" />
     </oauth:authorization-server>
 
     <oauth:resource-server id="resourceServerFilter"
                            token-services-ref="tokenServices" resource-id="myapi" />
-
 
     <bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
         <constructor-arg>
             <list>
                 <bean class="org.springframework.security.access.annotation.Jsr250Voter" />
                 <bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
-                <bean class="com.property.feedback.auth.OAuthVoter" />
             </list>
         </constructor-arg>
     </bean>
@@ -99,23 +92,10 @@
           class="org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter">
     </bean>
 
-    <sec:http auto-config="true" pattern="/oauth/token" use-expressions="true"
-              authentication-manager-ref="clientBasicAuthManager">
-        <sec:intercept-url pattern="/oauth/token" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <sec:http-basic entry-point-ref="clientAuthenticationEntryPoint" />
-        <sec:custom-filter ref="clientCredentialsTokenEndpointFilter"
-                           before="BASIC_AUTH_FILTER" />
-        <sec:custom-filter ref="oAuth2ClientContextFilter"
-                           after="EXCEPTION_TRANSLATION_FILTER" />
-        <sec:access-denied-handler ref="oauthAccessDeniedHandler" />
-    </sec:http>
-
     <sec:http pattern="/**" create-session="never"
               authentication-manager-ref="clientBasicAuthManager" access-decision-manager-ref="accessDecisionManager">
         <sec:anonymous enabled="true" />
-        <sec:intercept-url pattern="/oauth/token" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <sec:intercept-url pattern="/users/signup" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <sec:intercept-url pattern="/**" access="ROLE_API_USER"/>
+        <sec:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <sec:custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
         <sec:http-basic entry-point-ref="oauthAuthenticationEntryPoint" />
         <sec:access-denied-handler ref="oauthAccessDeniedHandler" />

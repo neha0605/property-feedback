@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "reviews")
 public class Review extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -24,6 +25,15 @@ public class Review extends BaseEntity {
     private int rating;
 
     private boolean published;
+
+    public Review() {
+    }
+
+    public Review(String feedback, String phoneNumber, int rating) {
+        this.feedback = feedback;
+        this.phoneNumber = phoneNumber;
+        this.rating = rating;
+    }
 
     public Integer getId() {
         return id;

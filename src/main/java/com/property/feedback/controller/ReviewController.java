@@ -1,14 +1,14 @@
 package com.property.feedback.controller;
 
-import com.property.feedback.service.ReviewService;
+import com.property.feedback.repository.models.PropertyFeedback;
 import com.property.feedback.repository.models.Review;
+import com.property.feedback.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by nehaojha on 02/11/16.
@@ -21,9 +21,14 @@ public class ReviewController extends BaseController {
     private ReviewService reviewService;
 
     @RequestMapping(method = RequestMethod.POST, headers = ACCEPT_JSON)
-    public ResponseEntity addNewReview(@RequestBody Review review) {
-        reviewService.addReview(review);
+    public ResponseEntity<String> addNewReview(@RequestBody PropertyFeedback feedback) {
+        reviewService.addReview(feedback);
         return new ResponseEntity("review added successfully", HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/{phoneNumber}", method = RequestMethod.GET, headers = ACCEPT_JSON)
+    public List<Review> getReviewByPhonenumber(@PathVariable String phoneNumber) {
+        return reviewService.findReviewByPhoneNumber(phoneNumber);
     }
 }
 

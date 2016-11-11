@@ -3,12 +3,14 @@ package com.property.feedback.repository;
 import com.property.feedback.repository.models.Property;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * Created by nehaojha on 07/11/16.
  */
+@Repository
 public interface PropertyRepo extends JpaRepository<Property, Integer> {
 
     @Query(value = "SELECT *," +
@@ -19,4 +21,7 @@ public interface PropertyRepo extends JpaRepository<Property, Integer> {
             "     ORDER BY distance" +
             "     LIMIT 0 , 30", nativeQuery = true)
     List<Property> findNearByProperties(double latitude, double longitude);
+
+    Property findByLatitudeAndLongitude(double latitude, double longitude);
+
 }
