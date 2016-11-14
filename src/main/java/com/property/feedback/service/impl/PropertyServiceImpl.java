@@ -2,6 +2,7 @@ package com.property.feedback.service.impl;
 
 import com.property.feedback.repository.PropertyRepo;
 import com.property.feedback.repository.models.Property;
+import com.property.feedback.repository.models.Review;
 import com.property.feedback.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,5 +26,15 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public Property findByLatitudeAndLongitude(double latitude, double longitude) {
         return propertyRepo.findByLatitudeAndLongitude(latitude, longitude);
+    }
+
+    @Override
+    public List<Review> findReviewByPropertyIdAndPublishedTrue(Integer propertyId) {
+        return propertyRepo.findReviewsByPropertyIdAndReviewsPublishedTrue(propertyId);
+    }
+
+    @Override
+    public List<Property> findAllProperties() {
+        return propertyRepo.findAll();
     }
 }

@@ -1,6 +1,7 @@
 package com.property.feedback.service;
 
 import com.property.feedback.repository.models.Property;
+import com.property.feedback.repository.models.Review;
 
 import java.util.List;
 
@@ -12,4 +13,8 @@ public interface PropertyService {
     List<Property> findReviewsNearLocation(Double latitude, Double longitude);
 
     Property findByLatitudeAndLongitude(double latitude, double longitude);
+
+    List<Review> findReviewByPropertyIdAndPublishedTrue(Integer propertyId);
+
+    List<Property> findAllProperties();
 }

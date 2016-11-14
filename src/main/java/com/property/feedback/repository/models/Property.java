@@ -24,7 +24,7 @@ public class Property extends BaseEntity {
     private Double distance;
 
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Review> review = new ArrayList<>();
+    private List<Review> reviews = new ArrayList<>();
 
     public Property() {
     }
@@ -75,12 +75,12 @@ public class Property extends BaseEntity {
         this.distance = distance;
     }
 
-    public List<Review> getReview() {
-        return review;
+    public List<Review> getReviews() {
+        return reviews;
     }
 
-    public void setReview(List<Review> review) {
-        this.review = review;
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     @Override
@@ -115,7 +115,7 @@ public class Property extends BaseEntity {
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", distance=" + distance +
-                ", review=" + review +
+                ", reviews=" + reviews +
                 '}';
     }
 }

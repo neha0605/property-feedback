@@ -8,6 +8,7 @@ import com.property.feedback.service.PropertyService;
 import com.property.feedback.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class ReviewServiceImpl implements ReviewService {
     private PropertyService propertyService;
 
 
+    @Transactional
     @Override
     public void addReview(PropertyFeedback feedback) {
         Property property = propertyService.findByLatitudeAndLongitude(feedback.getLatitude(), feedback.getLongitude());

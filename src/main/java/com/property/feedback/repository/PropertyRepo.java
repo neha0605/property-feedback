@@ -1,9 +1,11 @@
 package com.property.feedback.repository;
 
 import com.property.feedback.repository.models.Property;
+import com.property.feedback.repository.models.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,4 +26,5 @@ public interface PropertyRepo extends JpaRepository<Property, Integer> {
 
     Property findByLatitudeAndLongitude(double latitude, double longitude);
 
+    List<Review> findReviewsByPropertyIdAndReviewsPublishedTrue(Integer propertyId);
 }

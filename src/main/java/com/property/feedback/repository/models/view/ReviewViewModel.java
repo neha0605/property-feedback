@@ -1,28 +1,18 @@
 package com.property.feedback.repository.models.view;
 
+import com.property.feedback.repository.models.Review;
+
 /**
  * Created by nehaojha on 02/11/16.
  */
 public class ReviewViewModel {
 
     private String userReview;
+    private Integer rating;
 
-    private String name;
-
-    private String propertyName;
-
-//    public ReviewViewModel(Review review) {
-//        this.userReview = review.getUserReview();
-//        this.name = review.getName();
-//        this.propertyName = review.getPropertyName();
-//    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public ReviewViewModel(Review review) {
+        this.userReview = review.getFeedback();
+        this.rating = review.getRating();
     }
 
     public String getUserReview() {
@@ -33,11 +23,11 @@ public class ReviewViewModel {
         this.userReview = userReview;
     }
 
-    public String getPropertyName() {
-        return propertyName;
+    public Integer getRating() {
+        return rating;
     }
 
-    public void setPropertyName(String propertyName) {
-        this.propertyName = propertyName;
+    public void setRating(Integer rating) {
+        this.rating = rating;
     }
 }

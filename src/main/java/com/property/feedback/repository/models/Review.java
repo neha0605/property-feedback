@@ -18,7 +18,7 @@ public class Review extends BaseEntity {
 
     private String phoneNumber;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "propertyId")
     private Property property;
 
