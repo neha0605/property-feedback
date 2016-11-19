@@ -1,5 +1,10 @@
 package com.property.feedback.repository.models;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 /**
  * Created by nehaojha on 11/11/16.
  */
@@ -15,6 +20,9 @@ public class PropertyFeedback {
 
     private String feedback;
 
+    @NotEmpty
+    @Size(min = 10, max = 10)
+    @Pattern(regexp = "[0-9]*")
     private String phoneNumber;
 
     private int rating;

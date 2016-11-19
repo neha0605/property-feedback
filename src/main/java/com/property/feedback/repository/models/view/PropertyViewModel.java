@@ -23,6 +23,10 @@ public class PropertyViewModel {
         this.reviews = property.getReviews().stream().map(ReviewViewModel::new).collect(Collectors.toList());
     }
 
+    public PropertyViewModel(List<ReviewViewModel> reviews) {
+        this.reviews = reviews;
+    }
+
     public String getAddress() {
         return address;
     }

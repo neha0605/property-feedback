@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by nehaojha on 07/11/16.
@@ -26,5 +27,5 @@ public interface PropertyRepo extends JpaRepository<Property, Integer> {
 
     Property findByLatitudeAndLongitude(double latitude, double longitude);
 
-    List<Review> findReviewsByPropertyIdAndReviewsPublishedTrue(Integer propertyId);
+    Optional<Property> findByPropertyIdAndReviewsPublishedTrue(Integer propertyId);
 }

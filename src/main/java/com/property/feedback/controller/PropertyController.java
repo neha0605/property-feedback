@@ -3,6 +3,7 @@ package com.property.feedback.controller;
 import com.property.feedback.repository.models.Property;
 import com.property.feedback.repository.models.Review;
 import com.property.feedback.repository.models.view.PropertyViewModel;
+import com.property.feedback.repository.models.view.ReviewViewModel;
 import com.property.feedback.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,17 +29,24 @@ public class PropertyController extends BaseController {
         Property property = propertyService.findByLatitudeAndLongitude(latitude, longitude);
         PropertyViewModel viewModel = new PropertyViewModel(property);
         return viewModel;
-
     }
 
-    @RequestMapping(value = "/published/{propertyId}", method = RequestMethod.GET, headers = ACCEPT_JSON)
-    public List<Review> getPublishedReviewsByPropertyId(@PathVariable Integer propertyId) {
-        return propertyService.findReviewByPropertyIdAndPublishedTrue(propertyId);
+    @RequestMapping(value = "{id}/publishedReviews", method = RequestMethod.GET, headers = ACCEPT_JSON)
+    public ResponseEntity<List<ReviewViewModel>> getPublishedReviewsByPropertyId(@PathVariable(value = "id") Integer propertyId) {
+        List<Review> publishedReviews = propertyService.findPublishedReviewsForProperty(propertyId);
+        if (publishedReviews == null) {
+            return new ResponseEntity("error", HttpStatus.NOT_FOUND);
+        }
+        List<ReviewViewModel> viewModels = publishedReviews.stream().map(ReviewViewModel::new).collect(Collectors.toList());
+        return new ResponseEntity(viewModels, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/property/all", method = RequestMethod.GET, headers = ACCEPT_JSON)
     public ResponseEntity<List<PropertyViewModel>> getAllProperties() {
+
         List<PropertyViewModel> propertyViewModels = propertyService.findAllProperties().stream().map(PropertyViewModel::new).collect(Collectors.toList());
         return new ResponseEntity<>(propertyViewModels, HttpStatus.OK);
     }
+
+
 }

@@ -14,7 +14,7 @@ public interface PropertyService {
 
     Property findByLatitudeAndLongitude(double latitude, double longitude);
 
-    List<Review> findReviewByPropertyIdAndPublishedTrue(Integer propertyId);
+    List<Review> findPublishedReviewsForProperty(Integer propertyId);
 
     List<Property> findAllProperties();
 }
